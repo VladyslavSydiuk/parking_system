@@ -93,7 +93,7 @@ public class ParkingLotService {
 
         ParkingLevel level = new ParkingLevel(request.levelNumber());
         parkingLot.addLevel(level);
-        parkingLotRepository.save(parkingLot);
+        parkingLevelRepository.saveAndFlush(level);
         return parkingLotResponseMapper.toResponse(level);
     }
 
@@ -117,7 +117,7 @@ public class ParkingLotService {
 
         ParkingSlot slot = new ParkingSlot(slotCode, request.slotType());
         level.addSlot(slot);
-        parkingLevelRepository.save(level);
+        parkingSlotRepository.saveAndFlush(slot);
         return parkingLotResponseMapper.toResponse(slot);
     }
 
