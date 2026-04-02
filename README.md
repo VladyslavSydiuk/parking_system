@@ -1,6 +1,6 @@
 # Smart Parking System
 
-Backend service for managing parking lots, parking sessions, and fee calculation. The project is built with Java 21, Spring Boot 3.4, Gradle, and an in-memory H2 database.
+Backend service for managing parking lots, parking sessions, and fee calculation. The project is built with Java 21, Spring Boot 3.5, Gradle, and an in-memory H2 database.
 
 ## Overview
 
@@ -51,7 +51,7 @@ The application is split into clear layers:
 ## Tech Stack
 
 - Java 21
-- Spring Boot 3.4.4
+- Spring Boot 3.5.9
 - Gradle Wrapper
 - Spring Web
 - Spring Data JPA
@@ -75,6 +75,11 @@ On macOS/Linux:
 ```
 
 The API starts on `http://localhost:8080`.
+
+### Swagger UI / OpenAPI
+
+- Swagger UI: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- OpenAPI JSON: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
 
 ### Run tests
 

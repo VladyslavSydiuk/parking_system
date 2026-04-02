@@ -164,4 +164,16 @@ class ParkingSystemApiIntegrationTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("name must not be blank"));
     }
+
+    @Test
+    void shouldExposeOpenApiDocumentation() throws Exception {
+        mockMvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.info.title").value("Smart Parking System API"))
+                .andExpect(jsonPath("$.paths['/api/v1/parking-sessions/check-in']").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/parking-lots']").exists());
+
+        mockMvc.perform(get("/swagger-ui/index.html"))
+                .andExpect(status().isOk());
+    }
 }
