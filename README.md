@@ -159,7 +159,7 @@ curl -X POST http://localhost:8080/api/v1/parking-lots/{parkingLotId}/levels/{le
 ```bash
 curl -X POST http://localhost:8080/api/v1/parking-sessions/check-in \
   -H "Content-Type: application/json" \
-  -d "{\"parkingLotId\":\"{parkingLotId}\",\"licensePlate\":\"AA-1234-BB\",\"vehicleType\":\"CAR\"}"
+  -d "{\"parkingLotId\":{parkingLotId},\"licensePlate\":\"AA-1234-BB\",\"vehicleType\":\"CAR\"}"
 ```
 
 ### 5. View active sessions

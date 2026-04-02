@@ -75,7 +75,7 @@ class ParkingSystemApiIntegrationTest {
                 .getContentAsString();
 
         JsonNode parkingLotJson = objectMapper.readTree(parkingLotResponse);
-        String parkingLotId = parkingLotJson.get("id").asText();
+        long parkingLotId = parkingLotJson.get("id").asLong();
 
         String levelResponse = mockMvc.perform(post("/api/v1/parking-lots/{parkingLotId}/levels", parkingLotId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -90,7 +90,7 @@ class ParkingSystemApiIntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        String levelId = objectMapper.readTree(levelResponse).get("id").asText();
+        long levelId = objectMapper.readTree(levelResponse).get("id").asLong();
 
         String slotResponse = mockMvc.perform(post("/api/v1/parking-lots/{parkingLotId}/levels/{levelId}/slots", parkingLotId, levelId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -106,13 +106,13 @@ class ParkingSystemApiIntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        String slotId = objectMapper.readTree(slotResponse).get("id").asText();
+        long slotId = objectMapper.readTree(slotResponse).get("id").asLong();
 
         String sessionResponse = mockMvc.perform(post("/api/v1/parking-sessions/check-in")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                  "parkingLotId": "%s",
+                                  "parkingLotId": %s,
                                   "licensePlate": "aa-1234-bb",
                                   "vehicleType": "CAR"
                                 }
@@ -124,7 +124,7 @@ class ParkingSystemApiIntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        String sessionId = objectMapper.readTree(sessionResponse).get("sessionId").asText();
+        long sessionId = objectMapper.readTree(sessionResponse).get("sessionId").asLong();
 
         mockMvc.perform(get("/api/v1/parking-sessions/active"))
                 .andExpect(status().isOk())

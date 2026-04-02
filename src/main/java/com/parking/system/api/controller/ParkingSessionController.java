@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/parking-sessions")
@@ -65,7 +64,7 @@ public class ParkingSessionController {
     })
     public CheckOutResponse checkOut(
             @Parameter(description = "Parking session identifier")
-            @PathVariable UUID sessionId
+            @PathVariable Long sessionId
     ) {
         return parkingSessionService.checkOut(sessionId);
     }

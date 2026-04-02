@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -60,7 +59,7 @@ public class ParkingLotService {
     }
 
     @Transactional(readOnly = true)
-    public ParkingLotResponse getParkingLot(UUID parkingLotId) {
+    public ParkingLotResponse getParkingLot(Long parkingLotId) {
         return parkingLotResponseMapper.toResponse(findParkingLot(parkingLotId));
     }
 
@@ -74,7 +73,7 @@ public class ParkingLotService {
         return parkingLotResponseMapper.toResponse(parkingLot);
     }
 
-    public void deleteParkingLot(UUID parkingLotId) {
+    public void deleteParkingLot(Long parkingLotId) {
         ParkingLot parkingLot = findParkingLot(parkingLotId);
         if (parkingSessionRepository.existsByParkingLotIdAndStatus(parkingLotId, SessionStatus.ACTIVE)) {
             throw new ConflictException("Parking lot '%s' has active parking sessions".formatted(parkingLot.getName()));
@@ -83,7 +82,7 @@ public class ParkingLotService {
         parkingLotRepository.delete(parkingLot);
     }
 
-    public ParkingLevelResponse addLevel(UUID parkingLotId, CreateParkingLevelRequest request) {
+    public ParkingLevelResponse addLevel(Long parkingLotId, CreateParkingLevelRequest request) {
         ParkingLot parkingLot = findParkingLot(parkingLotId);
         if (parkingLevelRepository.existsByParkingLot_IdAndLevelNumber(parkingLotId, request.levelNumber())) {
             throw new ConflictException(
@@ -97,7 +96,7 @@ public class ParkingLotService {
         return parkingLotResponseMapper.toResponse(level);
     }
 
-    public void deleteLevel(UUID parkingLotId, UUID levelId) {
+    public void deleteLevel(Long parkingLotId, Long levelId) {
         ParkingLevel level = findLevel(parkingLotId, levelId);
         if (parkingSessionRepository.existsByLevelIdAndStatus(levelId, SessionStatus.ACTIVE)) {
             throw new ConflictException("Level %s has active parking sessions".formatted(level.getLevelNumber()));
@@ -106,7 +105,7 @@ public class ParkingLotService {
         parkingLevelRepository.delete(level);
     }
 
-    public ParkingSlotResponse addSlot(UUID parkingLotId, UUID levelId, CreateParkingSlotRequest request) {
+    public ParkingSlotResponse addSlot(Long parkingLotId, Long levelId, CreateParkingSlotRequest request) {
         ParkingLevel level = findLevel(parkingLotId, levelId);
         String slotCode = normalizeCode(request.slotCode(), "slot code");
         if (parkingSlotRepository.existsByLevel_IdAndSlotCodeIgnoreCase(levelId, slotCode)) {
@@ -121,7 +120,7 @@ public class ParkingLotService {
         return parkingLotResponseMapper.toResponse(slot);
     }
 
-    public void deleteSlot(UUID parkingLotId, UUID levelId, UUID slotId) {
+    public void deleteSlot(Long parkingLotId, Long levelId, Long slotId) {
         ParkingSlot slot = findSlot(parkingLotId, levelId, slotId);
         if (slot.getStatus() == SlotStatus.OCCUPIED || parkingSessionRepository.existsBySlotIdAndStatus(slotId, SessionStatus.ACTIVE)) {
             throw new ConflictException("Slot '%s' is currently occupied".formatted(slot.getSlotCode()));
@@ -131,9 +130,9 @@ public class ParkingLotService {
     }
 
     public ParkingSlotResponse updateSlotStatus(
-            UUID parkingLotId,
-            UUID levelId,
-            UUID slotId,
+            Long parkingLotId,
+            Long levelId,
+            Long slotId,
             UpdateParkingSlotStatusRequest request
     ) {
         ParkingSlot slot = findSlot(parkingLotId, levelId, slotId);
@@ -155,18 +154,18 @@ public class ParkingLotService {
         return parkingLotResponseMapper.toResponse(slot);
     }
 
-    private ParkingLot findParkingLot(UUID parkingLotId) {
+    private ParkingLot findParkingLot(Long parkingLotId) {
         return parkingLotRepository.findById(parkingLotId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parking lot '%s' was not found".formatted(parkingLotId)));
     }
 
-    private ParkingLevel findLevel(UUID parkingLotId, UUID levelId) {
+    private ParkingLevel findLevel(Long parkingLotId, Long levelId) {
         findParkingLot(parkingLotId);
         return parkingLevelRepository.findByIdAndParkingLot_Id(levelId, parkingLotId)
                 .orElseThrow(() -> new ResourceNotFoundException("Level '%s' was not found".formatted(levelId)));
     }
 
-    private ParkingSlot findSlot(UUID parkingLotId, UUID levelId, UUID slotId) {
+    private ParkingSlot findSlot(Long parkingLotId, Long levelId, Long slotId) {
         findLevel(parkingLotId, levelId);
         return parkingSlotRepository.findByIdAndLevel_Id(slotId, levelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Slot '%s' was not found".formatted(slotId)));

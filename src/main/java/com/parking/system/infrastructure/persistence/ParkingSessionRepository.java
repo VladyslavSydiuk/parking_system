@@ -6,19 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface ParkingSessionRepository extends JpaRepository<ParkingSession, UUID> {
+public interface ParkingSessionRepository extends JpaRepository<ParkingSession, Long> {
 
     boolean existsByLicensePlateIgnoreCaseAndStatus(String licensePlate, SessionStatus status);
 
-    boolean existsByParkingLotIdAndStatus(UUID parkingLotId, SessionStatus status);
+    boolean existsByParkingLotIdAndStatus(Long parkingLotId, SessionStatus status);
 
-    boolean existsByLevelIdAndStatus(UUID levelId, SessionStatus status);
+    boolean existsByLevelIdAndStatus(Long levelId, SessionStatus status);
 
-    boolean existsBySlotIdAndStatus(UUID slotId, SessionStatus status);
+    boolean existsBySlotIdAndStatus(Long slotId, SessionStatus status);
 
     List<ParkingSession> findAllByStatusOrderByEntryTimeAsc(SessionStatus status);
 
-    Optional<ParkingSession> findByIdAndStatus(UUID id, SessionStatus status);
+    Optional<ParkingSession> findByIdAndStatus(Long id, SessionStatus status);
 }

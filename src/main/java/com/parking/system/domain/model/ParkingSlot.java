@@ -6,13 +6,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-
-import java.util.UUID;
 
 @Entity
 @Table(
@@ -25,8 +24,8 @@ import java.util.UUID;
 public class ParkingSlot {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "slot_code", nullable = false, length = 30)
     private String slotCode;
@@ -52,7 +51,7 @@ public class ParkingSlot {
         this.status = SlotStatus.AVAILABLE;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 

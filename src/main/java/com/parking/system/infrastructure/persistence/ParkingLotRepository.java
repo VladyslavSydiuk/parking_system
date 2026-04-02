@@ -4,9 +4,8 @@ import com.parking.system.domain.model.ParkingLot;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
-public interface ParkingLotRepository extends JpaRepository<ParkingLot, UUID> {
+public interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
 
     boolean existsByNameIgnoreCase(String name);
 

@@ -4,11 +4,10 @@ import com.parking.system.domain.model.ParkingLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
-public interface ParkingLevelRepository extends JpaRepository<ParkingLevel, UUID> {
+public interface ParkingLevelRepository extends JpaRepository<ParkingLevel, Long> {
 
-    boolean existsByParkingLot_IdAndLevelNumber(UUID parkingLotId, Integer levelNumber);
+    boolean existsByParkingLot_IdAndLevelNumber(Long parkingLotId, Integer levelNumber);
 
-    Optional<ParkingLevel> findByIdAndParkingLot_Id(UUID id, UUID parkingLotId);
+    Optional<ParkingLevel> findByIdAndParkingLot_Id(Long id, Long parkingLotId);
 }

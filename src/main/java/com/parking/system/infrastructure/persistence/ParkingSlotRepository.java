@@ -9,13 +9,12 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, UUID> {
+public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, Long> {
 
-    boolean existsByLevel_IdAndSlotCodeIgnoreCase(UUID levelId, String slotCode);
+    boolean existsByLevel_IdAndSlotCodeIgnoreCase(Long levelId, String slotCode);
 
-    Optional<ParkingSlot> findByIdAndLevel_Id(UUID id, UUID levelId);
+    Optional<ParkingSlot> findByIdAndLevel_Id(Long id, Long levelId);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
@@ -26,5 +25,5 @@ public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, UUID> 
             where lot.id = :parkingLotId
             order by level.levelNumber asc, slot.slotCode asc
             """)
-    List<ParkingSlot> findAssignableSlotsByParkingLotId(@Param("parkingLotId") UUID parkingLotId);
+    List<ParkingSlot> findAssignableSlotsByParkingLotId(@Param("parkingLotId") Long parkingLotId);
 }

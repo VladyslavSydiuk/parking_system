@@ -5,13 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.UUID;
 
 @Entity
 @Table(
@@ -24,8 +24,8 @@ import java.util.UUID;
 public class ParkingSession {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "license_plate", nullable = false, length = 20)
     private String licensePlate;
@@ -35,19 +35,19 @@ public class ParkingSession {
     private VehicleType vehicleType;
 
     @Column(name = "parking_lot_id", nullable = false)
-    private UUID parkingLotId;
+    private Long parkingLotId;
 
     @Column(name = "parking_lot_name", nullable = false, length = 100)
     private String parkingLotName;
 
     @Column(name = "level_id", nullable = false)
-    private UUID levelId;
+    private Long levelId;
 
     @Column(name = "level_number", nullable = false)
     private Integer levelNumber;
 
     @Column(name = "slot_id", nullable = false)
-    private UUID slotId;
+    private Long slotId;
 
     @Column(name = "slot_code", nullable = false, length = 30)
     private String slotCode;
@@ -75,11 +75,11 @@ public class ParkingSession {
     public ParkingSession(
             String licensePlate,
             VehicleType vehicleType,
-            UUID parkingLotId,
+            Long parkingLotId,
             String parkingLotName,
-            UUID levelId,
+            Long levelId,
             Integer levelNumber,
-            UUID slotId,
+            Long slotId,
             String slotCode,
             SlotType slotType,
             Instant entryTime
@@ -97,7 +97,7 @@ public class ParkingSession {
         this.status = SessionStatus.ACTIVE;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -109,7 +109,7 @@ public class ParkingSession {
         return vehicleType;
     }
 
-    public UUID getParkingLotId() {
+    public Long getParkingLotId() {
         return parkingLotId;
     }
 
@@ -117,7 +117,7 @@ public class ParkingSession {
         return parkingLotName;
     }
 
-    public UUID getLevelId() {
+    public Long getLevelId() {
         return levelId;
     }
 
@@ -125,7 +125,7 @@ public class ParkingSession {
         return levelNumber;
     }
 
-    public UUID getSlotId() {
+    public Long getSlotId() {
         return slotId;
     }
 

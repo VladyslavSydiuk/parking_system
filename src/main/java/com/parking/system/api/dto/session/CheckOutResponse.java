@@ -5,17 +5,16 @@ import com.parking.system.domain.model.VehicleType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.UUID;
 
 public record CheckOutResponse(
-        UUID sessionId,
+        Long sessionId,
         String licensePlate,
         VehicleType vehicleType,
-        UUID parkingLotId,
+        Long parkingLotId,
         String parkingLotName,
-        UUID levelId,
+        Long levelId,
         Integer levelNumber,
-        UUID slotId,
+        Long slotId,
         String slotCode,
         SlotType slotType,
         Instant entryTime,

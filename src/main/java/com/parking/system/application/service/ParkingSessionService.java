@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -90,7 +89,7 @@ public class ParkingSessionService {
         return parkingSessionResponseMapper.toCheckInResponse(session);
     }
 
-    public CheckOutResponse checkOut(UUID sessionId) {
+    public CheckOutResponse checkOut(Long sessionId) {
         ParkingSession session = parkingSessionRepository.findByIdAndStatus(sessionId, SessionStatus.ACTIVE)
                 .orElseThrow(() -> new ResourceNotFoundException("Active parking session '%s' was not found".formatted(sessionId)));
 

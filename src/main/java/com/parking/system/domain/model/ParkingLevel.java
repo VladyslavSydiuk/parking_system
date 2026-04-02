@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,7 +16,6 @@ import jakarta.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(
@@ -28,8 +28,8 @@ import java.util.UUID;
 public class ParkingLevel {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "level_number", nullable = false)
     private Integer levelNumber;
@@ -48,7 +48,7 @@ public class ParkingLevel {
         this.levelNumber = levelNumber;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 

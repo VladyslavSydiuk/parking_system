@@ -29,7 +29,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/parking-lots")
@@ -58,7 +57,7 @@ public class ParkingLotController {
     })
     public ParkingLotResponse getParkingLot(
             @Parameter(description = "Parking lot identifier")
-            @PathVariable UUID parkingLotId
+            @PathVariable Long parkingLotId
     ) {
         return parkingLotService.getParkingLot(parkingLotId);
     }
@@ -96,7 +95,7 @@ public class ParkingLotController {
     })
     public ResponseEntity<Void> deleteParkingLot(
             @Parameter(description = "Parking lot identifier")
-            @PathVariable UUID parkingLotId
+            @PathVariable Long parkingLotId
     ) {
         parkingLotService.deleteParkingLot(parkingLotId);
         return ResponseEntity.noContent().build();
@@ -106,7 +105,7 @@ public class ParkingLotController {
     @Operation(summary = "Add level", description = "Adds a new level to the specified parking lot.")
     public ResponseEntity<ParkingLevelResponse> addLevel(
             @Parameter(description = "Parking lot identifier")
-            @PathVariable UUID parkingLotId,
+            @PathVariable Long parkingLotId,
             @Valid @RequestBody CreateParkingLevelRequest request
     ) {
         ParkingLevelResponse response = parkingLotService.addLevel(parkingLotId, request);
@@ -121,9 +120,9 @@ public class ParkingLotController {
     @Operation(summary = "Delete level", description = "Deletes a level if it has no active sessions.")
     public ResponseEntity<Void> deleteLevel(
             @Parameter(description = "Parking lot identifier")
-            @PathVariable UUID parkingLotId,
+            @PathVariable Long parkingLotId,
             @Parameter(description = "Level identifier")
-            @PathVariable UUID levelId
+            @PathVariable Long levelId
     ) {
         parkingLotService.deleteLevel(parkingLotId, levelId);
         return ResponseEntity.noContent().build();
@@ -133,9 +132,9 @@ public class ParkingLotController {
     @Operation(summary = "Add parking slot", description = "Creates a parking slot on the specified level.")
     public ResponseEntity<ParkingSlotResponse> addSlot(
             @Parameter(description = "Parking lot identifier")
-            @PathVariable UUID parkingLotId,
+            @PathVariable Long parkingLotId,
             @Parameter(description = "Level identifier")
-            @PathVariable UUID levelId,
+            @PathVariable Long levelId,
             @Valid @RequestBody CreateParkingSlotRequest request
     ) {
         ParkingSlotResponse response = parkingLotService.addSlot(parkingLotId, levelId, request);
@@ -150,11 +149,11 @@ public class ParkingLotController {
     @Operation(summary = "Delete parking slot", description = "Deletes a parking slot if it is not occupied.")
     public ResponseEntity<Void> deleteSlot(
             @Parameter(description = "Parking lot identifier")
-            @PathVariable UUID parkingLotId,
+            @PathVariable Long parkingLotId,
             @Parameter(description = "Level identifier")
-            @PathVariable UUID levelId,
+            @PathVariable Long levelId,
             @Parameter(description = "Parking slot identifier")
-            @PathVariable UUID slotId
+            @PathVariable Long slotId
     ) {
         parkingLotService.deleteSlot(parkingLotId, levelId, slotId);
         return ResponseEntity.noContent().build();
@@ -164,11 +163,11 @@ public class ParkingLotController {
     @Operation(summary = "Update parking slot status", description = "Manually marks a slot as AVAILABLE or UNAVAILABLE.")
     public ParkingSlotResponse updateSlotStatus(
             @Parameter(description = "Parking lot identifier")
-            @PathVariable UUID parkingLotId,
+            @PathVariable Long parkingLotId,
             @Parameter(description = "Level identifier")
-            @PathVariable UUID levelId,
+            @PathVariable Long levelId,
             @Parameter(description = "Parking slot identifier")
-            @PathVariable UUID slotId,
+            @PathVariable Long slotId,
             @Valid @RequestBody UpdateParkingSlotStatusRequest request
     ) {
         return parkingLotService.updateSlotStatus(parkingLotId, levelId, slotId, request);
